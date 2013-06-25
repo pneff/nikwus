@@ -1,0 +1,21 @@
+/**
+ * Create different sprites, both don't have a `-sprite-selector`.
+ */
+.icon, .icon-mobile {
+    display: inline-block;
+}
+.folder {
+    -sprite-name: mobile;
+    background: url(folder.png) no-repeat;
+}
+.arrow {
+    -sprite-name: default;
+    background: url(arrow.png) no-repeat;
+}
+.accept {
+    background: url(accept.png) no-repeat;
+}
+.world {
+    -sprite-name: mobile;
+    background: url(world.png) no-repeat;
+}

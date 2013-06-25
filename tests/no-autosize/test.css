@@ -1,0 +1,23 @@
+/**
+ * Autosizing can be turned off.
+ */
+.icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    -sprite-selector: default;
+    -sprite-autosize: off;
+}
+.folder {
+    background: url(folder.png) no-repeat;
+    width: 20px;
+}
+.accept {
+    background: url(accept.png) no-repeat;
+}
+.arrow {
+    background: url(arrow.png) no-repeat;
+}
+.world {
+    background: url(world.png) no-repeat;
+}

@@ -1,0 +1,28 @@
+/**
+ * In this style-sheet we have icons with different sizes. If the sprite size
+ * is different from the default one it should be put into the rule.
+ *
+ * If the rule defines a size already, nothing is overwritten.
+ */
+.icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url(default.png) no-repeat 0 0
+}
+.folder {
+    /* The width has been overwritten here. */
+    width: 20px
+}
+.accept {
+    background-position: -29px 0
+}
+.arrow {
+    background-position: -50px 0;
+    width: 5px;
+    height: 6px
+}
+.world {
+    height: 16px;
+    background-position: -60px 0
+}

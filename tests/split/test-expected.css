@@ -1,0 +1,30 @@
+/**
+ * Create different sprites.
+ */
+.icon, .icon-mobile {
+    display: inline-block
+}
+.icon {
+    background: url(default.png) no-repeat 0 0
+}
+.icon-mobile {
+    background: url(mobile.png) no-repeat 0 0
+}
+.folder {
+    width: 24px;
+    height: 20px
+}
+.arrow {
+    width: 5px;
+    height: 6px
+}
+.accept {
+    background-position: -10px 0;
+    width: 16px;
+    height: 16px
+}
+.world {
+    background-position: -29px 0;
+    width: 16px;
+    height: 16px
+}

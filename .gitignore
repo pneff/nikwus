@@ -1,0 +1,6 @@
+.env/
+*.pyc
+default.png
+mobile.png
+test-out.css
+*.egg-info/

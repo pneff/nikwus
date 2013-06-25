@@ -1,0 +1,13 @@
+/**
+ * Test for the case where we don't have a `-sprite-selector` property.
+ */
+.accept {
+    background: url(accept.png) no-repeat;
+    width: 16px;
+    height: 16px;
+}
+.world {
+    background: url(world.png) no-repeat;
+    width: 16px;
+    height: 16px;
+}
