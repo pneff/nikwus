@@ -1,0 +1,20 @@
+/**
+ * Spriting is not done by default for .gif and can be turned on/off for all
+ * images.
+ */
+.folder {
+    background: url(folder.png) no-repeat;
+    -sprite: no;
+}
+.accept {
+    background: url(accept.png) no-repeat;
+}
+.loader {
+    /* GIF images are not sprited by default */
+    background: url(loader.gif) no-repeat;
+}
+.loader-inlined {
+    /* But we can explicitly turn spriting on for GIF as well. */
+    -sprite: yes;
+    background: url(loader.gif) no-repeat;
+}

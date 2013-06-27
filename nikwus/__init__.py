@@ -6,6 +6,11 @@ import os.path
 DEFAULT_SPRITE_NAME = 'default'
 
 
+def as_bool(value):
+    """Converts a value into Boolean."""
+    return str(value).lower() in ('1', 'true', 'on', 'yes')
+
+
 class Sprite(object):
     # The name of this sprite
     name = None
@@ -111,6 +116,7 @@ def get_sprites(style_sheet):
         sprite_name = block.getPropertyValue('-sprite-name')
         sprite_autosize = block.getPropertyValue('-sprite-autosize')
         sprite_selector = block.getPropertyValue('-sprite-selector')
+        sprite_on = block.getPropertyValue('-sprite')
         background = block.getPropertyCSSValue('background')
         background_image = None
         if background:
@@ -131,9 +137,18 @@ def get_sprites(style_sheet):
             sprite.selector_declaration = block
         if sprite_autosize:
             block.removeProperty('-sprite-autosize')
-            sprite.autosize = str(sprite_autosize).lower() in ('1', 'true', 'on', 'yes')
+            sprite.autosize = as_bool(sprite_autosize)
+        if sprite_on:
+            block.removeProperty('-sprite')
+
         if background_image:
-            sprite.image_declarations.append((block,
-                                              background_image.absoluteUri))
+            if sprite_on:
+                sprite_on = as_bool(sprite_on)
+            else:
+                # Spriting is turned off by default for GIF images
+                sprite_on = not background_image.absoluteUri.endswith('.gif')
+            if sprite_on:
+                sprite.image_declarations.append(
+                    (block, background_image.absoluteUri))
 
     return sprites.values()
