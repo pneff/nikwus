@@ -1,0 +1,18 @@
+.icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    -sprite-selector: default;
+}
+.add {
+    background: url(add.png) no-repeat;
+}
+.arrow-back {
+    background: url(arrow-back.png) no-repeat;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio:2) {
+    .icon {
+        -sprite-selector: default 2x;
+    }
+}
