@@ -11,6 +11,25 @@ To make best use of Nikwus, some custom CSS rules will have to be added to the
 CSS file.
 
 
+Usage
+-----
+
+Nikwus is used as a library from existing Python code. The public method
+``nikwus.sprite`` is provided and it takes three arguments:
+
+- ``directory``: The image directory where the sprites are written to.
+- ``cssfile``: The file name of the CSS file to process. The default sprite
+  will have the same name as this file with the ``css`` extension changed to
+  ``png``.
+- ``outfile`` (optional): The file name where to write the converted CSS file
+  to. If this is not provided, the original CSS file is overwritten.
+
+
+Example::
+
+    nikwus.sprite('img/icons/', 'css/main.css')
+
+
 Custom Rules
 ------------
 
