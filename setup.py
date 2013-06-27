@@ -1,8 +1,17 @@
 from setuptools import setup, find_packages
+
+long_description = None
+try:
+    with open('README.rst') as f:
+        long_description = f.read()
+except Exception:
+    print 'Could not open README file for long_description'
+
 setup(
     name='Nikwus',
-    version='0.0.1',
+    version='0.5.0',
     description="Automatically sprite images in CSS files",
+    long_description=long_description,
     author=", ".join([
         "Patrice Neff <mail@patrice.ch>",
     ]),
