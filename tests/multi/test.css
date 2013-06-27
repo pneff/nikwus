@@ -1,0 +1,25 @@
+/**
+ * An image that is used multiple times should only be added to the sprite
+ * once.
+ */
+.icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    -sprite-selector: default;
+}
+.accept {
+    background: url(accept.png) no-repeat;
+}
+.world {
+    background: url(world.png) no-repeat;
+}
+.icon.accept {
+    background: url(accept.png) no-repeat;
+}
+.icon.world {
+    background: url(world.png) no-repeat;
+}
+.folder {
+    background: url(folder.png) no-repeat;
+}

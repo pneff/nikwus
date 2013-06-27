@@ -1,0 +1,21 @@
+/**
+ * An image that is used multiple times should only be added to the sprite
+ * once.
+ */
+.icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url(default.png) no-repeat 0 0
+}
+.world {
+    background-position: -21px 0
+}
+.icon.world {
+    background-position: -21px 0
+}
+.folder {
+    background-position: -42px 0;
+    width: 24px;
+    height: 20px
+}

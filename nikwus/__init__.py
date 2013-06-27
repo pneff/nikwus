@@ -37,17 +37,18 @@ class Sprite(object):
         print 'writing {0} into {1}'.format(self.name, directory)
 
         target_width = target_height = 0
-        images = []
+        images = {}
+        positions = {}
 
         # Load images and determine the target image width/height
         for block, url in self.image_declarations:
             file_name = url.replace('file:///', '')
-            print file_name
-            img = Image.open(file_name)
-            images.append(img)
-            width, height = img.size
-            target_width += width + 5
-            target_height = max(target_height, height)
+            if file_name not in images:
+                img = Image.open(file_name)
+                images[file_name] = img
+                width, height = img.size
+                target_width += width + 5
+                target_height = max(target_height, height)
         target_width -= 5
 
         # Determine the width defined on the block
@@ -63,17 +64,24 @@ class Sprite(object):
         vertical_offset = 0
         horizontal_offset = 0
         for block, url in self.image_declarations:
-            img = images.pop(0)
+            file_name = url.replace('file:///', '')
+            img = images[file_name]
+            if file_name in positions:
+                img_horizontal, img_vertical = positions[file_name]
+            else:
+                img_horizontal = horizontal_offset
+                img_vertical = vertical_offset
+                sprite.paste(img, (img_horizontal, img_vertical))
+
             width, height = img.size
-            sprite.paste(img, (horizontal_offset, vertical_offset))
             if self.selector_declaration:
                 block.removeProperty('background')
-                if vertical_offset > 0 or horizontal_offset > 0:
+                if img_vertical > 0 or img_horizontal > 0:
                     block.setProperty('background-position', '{0}px {1}'.format(
-                        0 - horizontal_offset, vertical_offset))
+                        0 - img_horizontal, img_vertical))
             else:
                 block.setProperty('background', 'url({2}) no-repeat {0}px {1}'.format(
-                    0 - horizontal_offset, vertical_offset, sprite_url))
+                    0 - img_horizontal, img_vertical, sprite_url))
 
             if self.autosize:
                 if not block.getPropertyValue('width') and not block.getPropertyValue('height'):
@@ -83,7 +91,9 @@ class Sprite(object):
                         block.setProperty('width', width_str)
                         block.setProperty('height', height_str)
 
-            horizontal_offset += width + 5
+            if file_name not in positions:
+                positions[file_name] = (horizontal_offset, vertical_offset)
+                horizontal_offset += width + 5
 
         if self.selector_declaration:
             self.selector_declaration.setProperty(
