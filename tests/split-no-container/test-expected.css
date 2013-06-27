@@ -10,12 +10,12 @@
     height: 20px
 }
 .arrow {
-    background: url(default.png) no-repeat 0 0;
+    background: url(test.png) no-repeat 0 0;
     width: 5px;
     height: 6px
 }
 .accept {
-    background: url(default.png) no-repeat -10px 0;
+    background: url(test.png) no-repeat -10px 0;
     width: 16px;
     height: 16px
 }

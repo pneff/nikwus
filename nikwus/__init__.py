@@ -3,9 +3,6 @@ import cssutils
 import os.path
 
 
-DEFAULT_SPRITE_NAME = 'default'
-
-
 def as_bool(value):
     """Converts a value into Boolean."""
     return str(value).lower() in ('1', 'true', 'on', 'yes')
@@ -28,7 +25,7 @@ class Sprite(object):
     # A list of CSS declarations which contain images for this sprite
     image_declarations = None
 
-    def __init__(self, name=DEFAULT_SPRITE_NAME):
+    def __init__(self, name):
         self.name = name
         self.image_declarations = []
         self.selector_declarations = {}
@@ -216,7 +213,11 @@ class Sprite(object):
 
 def sprite(directory, cssfile, outfile):
     style_sheet = cssutils.parseFile(cssfile, validate=False)
-    sprites = get_sprites(style_sheet.cssRules)
+
+    # Name the default sprite the same as the CSS file
+    default_sprite_name, _ = os.path.splitext(os.path.basename(cssfile))
+
+    sprites = get_sprites(style_sheet.cssRules, default_sprite_name)
     for sprite in sprites:
         sprite.generate(directory)
 
@@ -226,7 +227,7 @@ def sprite(directory, cssfile, outfile):
     return True
 
 
-def get_sprites(rules, sprites=None):
+def get_sprites(rules, default_sprite_name, sprites=None):
     """Returns a dict of all sprites that need to be created from the given
     rules.
 
@@ -240,14 +241,14 @@ def get_sprites(rules, sprites=None):
 
     for rule in rules:
         if hasattr(rule, 'style'):
-            _process_rule(rule, sprites)
+            _process_rule(rule, sprites, default_sprite_name)
         if hasattr(rule, 'cssRules'):
-            get_sprites(rule.cssRules, sprites)
+            get_sprites(rule.cssRules, default_sprite_name, sprites)
 
     return sprites.values()
 
 
-def _process_rule(rule, sprites):
+def _process_rule(rule, sprites, default_sprite_name):
     """Process an individual rule for sprite preparation.
     """
     block = rule.style
@@ -277,7 +278,10 @@ def _process_rule(rule, sprites):
                 sprite_resolution))
         sprite_resolution = int(sprite_resolution[:-1])
 
-    sprite_name = sprite_selector or sprite_name or DEFAULT_SPRITE_NAME
+    sprite_name = sprite_selector or sprite_name or default_sprite_name
+    if sprite_name == 'default':
+        sprite_name = default_sprite_name
+
     sprite = sprites.setdefault(sprite_name, Sprite(sprite_name))
 
     block.removeProperty('-sprite-name')

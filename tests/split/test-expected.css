@@ -5,7 +5,7 @@
     display: inline-block
 }
 .icon {
-    background: url(default.png) no-repeat 0 0
+    background: url(test.png) no-repeat 0 0
 }
 .icon-mobile {
     background: url(mobile.png) no-repeat 0 0

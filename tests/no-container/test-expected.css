@@ -2,12 +2,12 @@
  * Test for the case where we don't have a `-sprite-selector` property.
  */
 .accept {
-    background: url(default.png) no-repeat 0 0;
+    background: url(test.png) no-repeat 0 0;
     width: 16px;
     height: 16px
 }
 .world {
-    background: url(default.png) no-repeat -21px 0;
+    background: url(test.png) no-repeat -21px 0;
     width: 16px;
     height: 16px
 }

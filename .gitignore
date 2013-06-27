@@ -1,6 +1,8 @@
 .env/
 *.pyc
-default.png
+test.png
+test-2x.png
 mobile.png
 test-out.css
 *.egg-info/
+.noseids

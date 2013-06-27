@@ -5,7 +5,7 @@
     display: inline-block;
     width: 16px;
     height: 16px;
-    background: url(default.png) no-repeat 0 0
+    background: url(test.png) no-repeat 0 0
 }
 .folder {
     width: 20px

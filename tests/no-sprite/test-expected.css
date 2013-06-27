@@ -6,7 +6,7 @@
     background: url(folder.png) no-repeat
 }
 .accept {
-    background: url(default.png) no-repeat 0 0;
+    background: url(test.png) no-repeat 0 0;
     width: 16px;
     height: 16px
 }
@@ -16,7 +16,7 @@
 }
 .loader-inlined {
     /* But we can explicitly turn spriting on for GIF as well. */
-    background: url(default.png) no-repeat -21px 0;
+    background: url(test.png) no-repeat -21px 0;
     width: 16px;
     height: 16px
 }
