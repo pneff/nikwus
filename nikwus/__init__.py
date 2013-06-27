@@ -1,5 +1,6 @@
 from PIL import Image
 import cssutils
+import logging
 import os.path
 
 
@@ -25,12 +26,16 @@ class Sprite(object):
     # A list of CSS declarations which contain images for this sprite
     image_declarations = None
 
+    # Horizontal spacing of icons
+    space_x = 10
+    space_y = 10
+
     def __init__(self, name):
         self.name = name
         self.image_declarations = []
         self.selector_declarations = {}
 
-    def generate(self, directory):
+    def generate(self, directory, reldir):
         """Write an image for this sprite into the directory.
         """
         print 'writing {0} into {1}'.format(self.name, directory)
@@ -47,7 +52,8 @@ class Sprite(object):
         distribution = self._calculate_distribution(images)
 
         # Create and save the sprites
-        sprites = self._create_sprites(directory, resolutions, distribution)
+        sprites = self._create_sprites(directory, reldir, resolutions,
+                                       distribution)
 
         # Change the CSS rules for the sprite
         self._rewrite_css(distribution, sprites)
@@ -112,17 +118,17 @@ class Sprite(object):
                     'blocks': [block]
                 }
 
-                target_width += width + 5
+                target_width += width + self.space_x
                 target_height = max(target_height, height)
 
-        target_width -= 5
+        target_width -= self.space_x
         return {
             'width': target_width,
             'height': target_height,
             'positions': positions.values(),
         }
 
-    def _create_sprites(self, directory, resolutions, distribution):
+    def _create_sprites(self, directory, reldir, resolutions, distribution):
         # Create sprite images
         sprites = {}
         for resolution in resolutions:
@@ -130,6 +136,11 @@ class Sprite(object):
                 sprite_url = self.name + '.png'
             else:
                 sprite_url = '{0}-{1}x.png'.format(self.name, resolution)
+
+            # Make the sprite URL relative to the CSS file
+            if reldir:
+                sprite_url = reldir + '/' + sprite_url
+
             image = Image.new(
                 mode='RGBA',
                 size=(distribution['width'] * resolution,
@@ -141,6 +152,7 @@ class Sprite(object):
                 pos_x = pos['x']
                 pos_y = pos['y']
                 pos_img = pos['images'][resolution]
+                print '  ', pos['file_name']
                 image.paste(pos_img, (pos_x * resolution, pos_y * resolution))
 
             sprites[resolution] = {
@@ -211,15 +223,28 @@ class Sprite(object):
         return default_width, default_height
 
 
-def sprite(directory, cssfile, outfile):
+def sprite(directory, cssfile, outfile=None):
+    logger = logging.getLogger('cssutils')
+    logger.setLevel(logging.FATAL)
+    cssutils.log.setLog(logger)
+
+    if outfile is None:
+        outfile = cssfile
+
     style_sheet = cssutils.parseFile(cssfile, validate=False)
+
+    # Calculate relative directory name from CSS file to the output directory
+    reldir = os.path.relpath(directory, os.path.dirname(cssfile))
+    reldir = reldir.replace('\\', '/').rstrip('/')
+    if reldir == '.':
+        reldir = ''
 
     # Name the default sprite the same as the CSS file
     default_sprite_name, _ = os.path.splitext(os.path.basename(cssfile))
 
     sprites = get_sprites(style_sheet.cssRules, default_sprite_name)
     for sprite in sprites:
-        sprite.generate(directory)
+        sprite.generate(directory, reldir)
 
     with open(outfile, 'wb') as f:
         f.write(style_sheet.cssText)

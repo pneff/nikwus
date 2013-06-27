@@ -1,0 +1,9 @@
+.icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url(../img/test.png) no-repeat 0 0
+}
+.world {
+    background-position: -21px 0
+}

@@ -5,16 +5,18 @@ from nikwus import sprite
 
 def test_sprites():
     for directory in glob.glob(os.path.dirname(__file__) + '/*'):
-        if os.path.isdir(directory):
-            yield check_sprites_dir, directory
+        if os.path.isdir(directory + '/css'):
+            yield check_sprites_dir, directory + '/css', directory + '/img'
+        elif os.path.isdir(directory):
+            yield check_sprites_dir, directory, directory
 
 
-def check_sprites_dir(directory):
+def check_sprites_dir(css_directory, sprite_directory):
     """Run tests on a single test directory."""
-    input_file = os.path.join(directory, 'test.css')
-    out_file = os.path.join(directory, 'test-out.css')
-    expected_file = os.path.join(directory, 'test-expected.css')
-    res = sprite(directory, input_file, out_file)
+    input_file = os.path.join(css_directory, 'test.css')
+    out_file = os.path.join(css_directory, 'test-out.css')
+    expected_file = os.path.join(css_directory, 'test-expected.css')
+    res = sprite(sprite_directory, input_file, out_file)
     assert res, res
     assert os.path.exists(out_file)
     assert_same_contents(out_file, expected_file)
