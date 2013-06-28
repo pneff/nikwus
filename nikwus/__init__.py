@@ -4,6 +4,9 @@ import logging
 import os.path
 
 
+SPRITE_OFFSET = 10
+
+
 def as_bool(value):
     """Converts a value into Boolean."""
     return str(value).lower() in ('1', 'true', 'on', 'yes')
@@ -27,18 +30,20 @@ class Sprite(object):
     image_declarations = None
 
     # Horizontal spacing of icons
-    space_x = 10
-    space_y = 10
+    space_x = SPRITE_OFFSET
+    space_y = SPRITE_OFFSET
 
     def __init__(self, name):
         self.name = name
         self.image_declarations = []
         self.selector_declarations = {}
 
-    def generate(self, directory, reldir):
+    def generate(self, directory, reldir, offset=None):
         """Write an image for this sprite into the directory.
         """
         print 'writing {0} into {1}'.format(self.name, directory)
+        if offset is not None:
+            self.space_x = self.space_y = offset
 
         if self.selector_declarations and not self.selector_declarations.get(1):
             raise ValueError('Missing sprite selector for default resolution')
@@ -223,7 +228,7 @@ class Sprite(object):
         return default_width, default_height
 
 
-def sprite(directory, cssfile, outfile=None):
+def sprite(directory, cssfile, outfile=None, offset=SPRITE_OFFSET):
     logger = logging.getLogger('cssutils')
     logger.setLevel(logging.FATAL)
     cssutils.log.setLog(logger)
@@ -244,7 +249,7 @@ def sprite(directory, cssfile, outfile=None):
 
     sprites = get_sprites(style_sheet.cssRules, default_sprite_name)
     for sprite in sprites:
-        sprite.generate(directory, reldir)
+        sprite.generate(directory, reldir, offset=offset)
 
     with open(outfile, 'wb') as f:
         f.write(style_sheet.cssText)

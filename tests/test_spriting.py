@@ -16,7 +16,7 @@ def check_sprites_dir(css_directory, sprite_directory):
     input_file = os.path.join(css_directory, 'test.css')
     out_file = os.path.join(css_directory, 'test-out.css')
     expected_file = os.path.join(css_directory, 'test-expected.css')
-    res = sprite(sprite_directory, input_file, out_file)
+    res = sprite(sprite_directory, input_file, out_file, offset=5)
     assert res, res
     assert os.path.exists(out_file)
     assert_same_contents(out_file, expected_file)
