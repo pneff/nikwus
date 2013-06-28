@@ -12,6 +12,18 @@ def as_bool(value):
     return str(value).lower() in ('1', 'true', 'on', 'yes')
 
 
+def normalize_filename(url):
+    """
+    Normalize file names from file URL to local file names.
+
+    Filenames start with `file:///` on Windows and `file://` on Unix.
+    """
+    fname = url.replace('file://', '')
+    if os.sep != '/' and not os.path.exists(fname):
+        fname = fname.lstrip('/')
+    return fname
+
+
 class Sprite(object):
     # The name of this sprite
     name = None
@@ -73,7 +85,7 @@ class Sprite(object):
         images = {}
 
         for block, url in self.image_declarations:
-            file_name = url.replace('file:///', '')
+            file_name = normalize_filename(url)
             if file_name not in images:
                 img_resolutions = {}
                 img = Image.open(file_name)
@@ -107,7 +119,7 @@ class Sprite(object):
         positions = {}
         target_width = target_height = 0
         for block, url in self.image_declarations:
-            file_name = url.replace('file:///', '')
+            file_name = normalize_filename(url)
             if file_name in positions:
                 positions[file_name]['blocks'].append(block)
             else:
