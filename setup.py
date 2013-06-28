@@ -9,7 +9,7 @@ except Exception:
 
 setup(
     name='Nikwus',
-    version='0.5.0',
+    version='0.5.1',
     description="Automatically sprite images in CSS files",
     long_description=long_description,
     author=", ".join([
