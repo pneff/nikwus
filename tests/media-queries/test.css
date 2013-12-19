@@ -1,0 +1,32 @@
+/* This file doesn't have any sprites, but tests if media queries are preserved. */
+body {
+  color: red
+}
+
+@media print {
+    body {
+        color: green
+    }
+}
+@media (min-width: 768px) {
+  body {
+      color: yellow
+  }
+}
+@media (min-width: 992px) {
+  body {
+      color: blue
+  }
+}
+body {
+    background: black
+}
+@media screen and (min-width: 992px) {
+  body {
+      color: violet
+  }
+}
+
+body {
+    border: 1px solid cyan
+}

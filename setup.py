@@ -17,7 +17,7 @@ setup(
     ]),
     packages=find_packages(),
     install_requires=[
-        'cssutils',
+        'cssutils >= 1.0',
         'Pillow',
     ],
     tests_require=[
