@@ -26,5 +26,10 @@ setup(
     test_suite='nose.collector',
     license='BSD',
     classifiers=[
+        'Development Status :: 4 - Beta',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: BSD License',
+        'Topic :: Internet :: WWW/HTTP :: Site Management',
+        'Topic :: Multimedia :: Graphics :: Graphics Conversion',
     ]
 )
