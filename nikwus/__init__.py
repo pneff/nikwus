@@ -172,7 +172,6 @@ class Sprite(object):
                 pos_x = pos['x']
                 pos_y = pos['y']
                 pos_img = pos['images'][resolution]
-                print '  ', pos['file_name']
                 image.paste(pos_img, (pos_x * resolution, pos_y * resolution))
 
             sprites[resolution] = {
