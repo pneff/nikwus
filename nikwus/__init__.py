@@ -146,6 +146,9 @@ class Sprite(object):
         }
 
     def _create_sprites(self, directory, reldir, resolutions, distribution):
+        if not distribution['positions']:
+            return
+
         # Create sprite images
         sprites = {}
         for resolution in resolutions:
