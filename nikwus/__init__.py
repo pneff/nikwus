@@ -153,13 +153,15 @@ class Sprite(object):
         sprites = {}
         for resolution in resolutions:
             if resolution == 1:
-                sprite_url = self.name + '.png'
+                sprite_fname = self.name + '.png'
             else:
-                sprite_url = '{0}-{1}x.png'.format(self.name, resolution)
+                sprite_fname = '{0}-{1}x.png'.format(self.name, resolution)
 
             # Make the sprite URL relative to the CSS file
             if reldir:
-                sprite_url = reldir + '/' + sprite_url
+                sprite_url = reldir + '/' + sprite_fname
+            else:
+                sprite_url = sprite_fname
 
             image = Image.new(
                 mode='RGBA',
@@ -179,7 +181,7 @@ class Sprite(object):
                 'img': image,
             }
 
-            image.save(os.path.join(directory, sprite_url))
+            image.save(os.path.join(directory, sprite_fname))
 
         return sprites
 
