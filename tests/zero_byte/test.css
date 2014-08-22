@@ -1,0 +1,4 @@
+/* Test a bug in CSSUtils where backslash-0 was converted to an actual 0-byte. */
+.foo {
+    line-height: 1.45 \0;
+}

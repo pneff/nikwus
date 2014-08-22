@@ -268,9 +268,17 @@ def sprite(directory, cssfile, outfile=None, offset=SPRITE_OFFSET):
         sprite.generate(directory, reldir, offset=offset)
 
     with open(outfile, 'wb') as f:
-        f.write(style_sheet.cssText)
+        f.write(fixup_css(style_sheet.cssText))
 
     return True
+
+
+def fixup_css(text):
+    """Apply a workaround for CSSUtils, which replaces `\0` tokens in the code
+    with actual 0-bytes. `\0` is used as a IE hack, e.g. by Twitter's
+    Bootstrap.
+    """
+    return text.replace('\x00', '\\0')
 
 
 def get_sprites(rules, default_sprite_name, sprites=None):
